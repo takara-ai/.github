@@ -1,2 +1,1 @@
-# .github
-Transforming Humanity.
+# Welcome to takara.ai
