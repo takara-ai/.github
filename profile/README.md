@@ -1,6 +1,6 @@
 # Welcome to takara.ai's GitHub Repository
 
-![Takara.ai Logo]([https://takara.ai/logo.png](https://takara.ai/android-chrome-512x512.png))
+![Takara.ai Logo](https://takara.ai/android-chrome-512x512.png)
 
 ## About Us
 
