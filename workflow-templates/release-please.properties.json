@@ -1,0 +1,16 @@
+{
+  "name": "Release Please",
+  "description": "Automated releases based on conventional commits",
+  "iconName": "tag",
+  "categories": [
+    "Release",
+    "Automation"
+  ],
+  "filePatterns": [
+    "package.json",
+    "pyproject.toml",
+    "setup.py",
+    "Cargo.toml",
+    "go.mod"
+  ]
+} 

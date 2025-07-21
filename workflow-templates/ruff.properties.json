@@ -1,0 +1,14 @@
+{
+  "name": "Ruff",
+  "description": "Lint Python code with Ruff",
+  "iconName": "python",
+  "categories": [
+    "Python",
+    "Linting"
+  ],
+  "filePatterns": [
+    "*.py",
+    "pyproject.toml",
+    "requirements.txt"
+  ]
+} 

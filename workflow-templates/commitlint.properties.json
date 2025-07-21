@@ -1,0 +1,12 @@
+{
+  "name": "Lint Commit Messages",
+  "description": "Check commit messages follow conventional commit format",
+  "iconName": "git-commit",
+  "categories": [
+    "Git",
+    "Linting"
+  ],
+  "filePatterns": [
+    ".git"
+  ]
+} 

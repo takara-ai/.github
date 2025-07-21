@@ -1,0 +1,17 @@
+name: Ruff
+
+on:
+  push: # block on every push to the main branches
+    branches: [main, develop]
+  pull_request: # and every PR
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Fastest path: use the official action (installs & caches Ruff)
+      - uses: astral-sh/ruff-action@v3 # latest tag
+        with:
+          args: check --output-format=github # ↙ inline annotations 
