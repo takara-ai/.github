@@ -56,4 +56,4 @@ To maintain code quality and consistency, please follow these guidelines when co
 
 ## Questions?
 
-If you have any questions, contact jordan@takara.ai or paul@takara.ai
+If you have any questions, contact jordan@takara.ai
