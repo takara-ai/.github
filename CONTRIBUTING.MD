@@ -1,8 +1,4 @@
-# Contributing to TAKARA.AI Projects.
-
-**Version: v0.1.0**
-
-To maintain code quality and consistency, please follow these guidelines when contributing.
+# Contributing to TAKARA.AI Projects
 
 ## Commit Message Standards
 
@@ -16,10 +12,11 @@ To maintain code quality and consistency, please follow these guidelines when co
 
 - **Do NOT push directly to `main`.**
 - Always create a new branch for your changes and open a Pull Request (PR).
+- Use the PR template to describe what was changed and why.
 - Ensure your PR is up-to-date with the latest `main` branch before requesting review.
 - All PRs must pass the linter and commit message checks before merging.
 
-## Linting and Formatting
+## Code Quality
 
 - We use [Ruff](https://docs.astral.sh/ruff/) for linting and formatting Python code.
 - The linter runs automatically on every PR and push.
@@ -41,13 +38,12 @@ To maintain code quality and consistency, please follow these guidelines when co
    ```
 
 **Key Ruff settings:**
-
 - Line length: 88
 - Target Python: 3.12
 - Enabled rules: errors, flakes, bugbear, import-sort, type-checking, annotation
 - Long lines (`E501`) are ignored
 
-## Code Review & Etiquette
+## Code Review
 
 - Write clear, descriptive PR titles and descriptions.
 - Reference related issues or discussions if applicable.
