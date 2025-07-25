@@ -12,6 +12,11 @@ on:
         required: false
         type: string
         default: 'main'
+      config-file:
+        description: 'Path to release-please config file'
+        required: false
+        type: string
+        default: '.release-please-config.json'
 
 permissions:
   contents: write
@@ -21,6 +26,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: ./.github/actions/release-please
         with:
-          token: ${{ inputs.token }} 
+          token: ${{ inputs.token }}
+          config-file: ${{ inputs.config-file }} 

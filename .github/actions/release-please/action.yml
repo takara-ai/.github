@@ -1,0 +1,20 @@
+name: 'Release Please'
+description: 'Automated releases based on conventional commits'
+
+inputs:
+  token:
+    description: 'GitHub token for release-please'
+    required: true
+  config-file:
+    description: 'Path to release-please config file'
+    required: false
+    default: '.release-please-config.json'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Release Please
+      uses: googleapis/release-please-action@v4
+      with:
+        token: ${{ inputs.token }}
+        config-file: ${{ inputs.config-file }} 
