@@ -13,6 +13,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
     - name: Run Release Please
       uses: googleapis/release-please-action@v4
       with:
