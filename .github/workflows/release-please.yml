@@ -5,8 +5,14 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release-please:
-    uses: ./.github/workflows/release-please-reusable.yml
-    secrets:
-      token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }} 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/release-please
+        with:
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }} 
