@@ -1,0 +1,56 @@
+---
+description: Enforce Takara code standards for package management, style, and commit messages
+alwaysApply: true
+---
+
+# Takara Code & Commit Standards
+
+## 1. Package Management
+
+- **Always** use `pnpm` for Node.js.  
+  - **Never** use `npm` or `yarn`.
+- **Always** use `uv` for Python.  
+  - **Never** use `pip`, `pipenv`, or `poetry`.
+- **Never** include version numbers for any dependencies in install commands, manifests, code, or documentation.
+  - **Do not** specify or pin versions.
+  - **Do not** generate or commit lockfiles (e.g. `package-lock.json`, `yarn.lock`, `Pipfile.lock`).
+
+## 2. Code Style
+
+- **Never** include emojis or decorative/special characters in code, comments, output, or documentation.
+- **Never** generate scripts, code, or documentation that starts or launches development environments or dev servers.
+- **Always** write code that is:
+  - Clean, concise, and DRY (Don’t Repeat Yourself)
+  - Not unnecessarily complicated
+  - Readable and maintainable
+
+## 3. Commit Messages
+
+- **All commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):**
+    - Use the format `<type>(optional scope): <description>`.
+    - Common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+    - The description should be concise and imperative (e.g., “add authentication” not “added authentication”).
+    - **No emojis or decorative punctuation.**
+    - **Examples:**
+      - `feat(api): add user authentication`
+      - `fix: resolve crash on startup`
+      - `chore: update dependencies`
+- **Do not** generate or use non-conventional commit styles.
+
+---
+
+## Examples
+
+- ✅ `pnpm add express`
+- ❌ `pnpm add express@4.18.2`
+- ✅ `uv pip install requests`
+- ❌ `uv pip install requests==2.31.0`
+- ✅ No lockfiles or version numbers in code or documentation
+- ✅ No emojis anywhere
+- ✅ No scripts or commands for starting dev servers
+- ✅ Commits: `feat: add login page`  
+  ❌ `add login page 🚀`
+
+---
+
+> **These rules are to be followed for all code, scripts, documentation, and output generated for this project.**
