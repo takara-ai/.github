@@ -3,10 +3,6 @@ name: Release Please (Reusable)
 on:
   workflow_call:
     inputs:
-      token:
-        description: 'GitHub token for release-please'
-        required: true
-        type: string
       branch:
         description: 'Branch to run on'
         required: false
@@ -17,6 +13,10 @@ on:
         required: false
         type: string
         default: '.release-please-config.json'
+    secrets:
+      token:
+        description: 'GitHub token for release-please'
+        required: true
 
 permissions:
   contents: write
@@ -28,5 +28,5 @@ jobs:
     steps:
       - uses: ./.github/actions/release-please
         with:
-          token: ${{ inputs.token }}
+          token: ${{ secrets.token }}
           config-file: ${{ inputs.config-file }} 
