@@ -1,9 +1,7 @@
 name: Commit
 on:
   workflow_call:
-    secrets:
-      GITHUB_TOKEN:
-        required: true
+
   pull_request:
   push:
     branches:
