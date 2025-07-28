@@ -1,13 +1,17 @@
-name: Lint Commit Messages
-on: [pull_request]
+# .github/workflows/commitlint.yml
+name: Commitlint (central template)
 
-permissions:
-  contents: read
-  pull-requests: read
+# doesn't need workflow call, only use : for nested data
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
-  commitlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: wagoid/commitlint-github-action@v6 
+  lint:
+    # calls your central workflow
+    uses: takara-ai/.github/.github/workflows/commit.yml@main
+    # inherit the caller’s GITHUB_TOKEN so Commitlint can read PRs/commits
+    secrets: inherit
+    # this is neccessary to pass to central workflow
