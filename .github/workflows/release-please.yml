@@ -1,6 +1,5 @@
-name: release-please
-
 on:
+  workflow_call:
   push:
     branches:
       - main
@@ -9,12 +8,19 @@ permissions:
   contents: write
   pull-requests: write
 
+name: release-please
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: googleapis/release-please-action@v4
         with:
+          # this assumes that you have created a personal access token
+          # (PAT) and configured it as a GitHub action secret named
+          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          release-type: simple 
+          # this is a built-in strategy in release-please, see "Action Inputs"
+          # for more options
+          # can be overridden by setting RELEASE_TYPE variable in repository settings
+          release-type: ${{ vars.RELEASE_TYPE || 'simple' }}
