@@ -40,21 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check for Python files
-        id: check-python
-        run: |
-          if git ls-files "*.py" | head -1; then
-            echo "python_detected=true" >> $GITHUB_OUTPUT
-          else
-            echo "python_detected=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Run Ruff
-        if: steps.check-python.outputs.python_detected == 'true'
+        if: hashFiles('**/*.py') != ''
         uses: astral-sh/ruff-action@v3
         with:
           args: check --output-format=github
-
-      - name: No Python files found
-        if: steps.check-python.outputs.python_detected == 'false'
-        run: echo "No Python files detected. Ruff linting skipped."
