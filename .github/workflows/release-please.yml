@@ -2,6 +2,7 @@
 
 name: release-please
 
+workflow_call:
 on:
   push:
     branches:
