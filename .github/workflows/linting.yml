@@ -35,6 +35,7 @@ jobs:
           key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
           restore-keys: |
             commit-lint-${{ runner.os }}-
+          save-always: true
 
       - name: Install commit-lint
         if: steps.cache-commit-lint.outputs.cache-hit != 'true'
