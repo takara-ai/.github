@@ -16,7 +16,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+
+      - name: Cache Go build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ${{ env.GOPATH }}/pkg/mod
+          key: go-cache-${{ runner.os }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: go-cache-${{ runner.os }}-
+
+      - name: Cache commit-lint binary
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.GOPATH }}/bin/commit-lint
+          key: commit-lint-binary-${{ runner.os }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: commit-lint-binary-${{ runner.os }}-
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -28,7 +44,13 @@ jobs:
           GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
 
       - name: Run commit-lint
-        run: commit-lint
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch --no-tags --depth=1 origin ${{ github.event.pull_request.base.ref }}
+            commit-lint --range origin/${{ github.event.pull_request.base.ref }}..HEAD
+          else
+            commit-lint
+          fi
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
