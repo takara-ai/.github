@@ -21,8 +21,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
+      - name: List files for debugging
+        run: |
+          pwd
+          ls -l
+          ls -l go-commitlint
       - name: Run commitlint
-        run: go run ./go-commitlint
+        working-directory: go-commitlint
+        run: go run .
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
