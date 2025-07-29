@@ -31,22 +31,19 @@ jobs:
         id: cache-commit-lint
         uses: actions/cache@v4
         with:
-          path: ~/go/bin/commit-lint
+          path: .cache/commit-lint
           key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
           restore-keys: |
             commit-lint-${{ runner.os }}-
 
       - name: Install commit-lint
         if: steps.cache-commit-lint.outputs.cache-hit != 'true'
-        run: GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
+        run: |
+          mkdir -p .cache
+          GOBIN=$PWD/.cache GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
 
       - name: Run commit-lint
-        run: |
-          if [[ -f ~/go/bin/commit-lint ]]; then
-            ~/go/bin/commit-lint
-          else
-            $(go env GOPATH)/bin/commit-lint
-          fi
+        run: .cache/commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
