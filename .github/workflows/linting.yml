@@ -15,20 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: List files for debugging
-        run: |
-          pwd
-          ls -l
-          ls -l go-commitlint
+      - name: Clone commit-lint repository
+        run: git clone https://github.com/takara-ai/commit-lint.git
       - name: Run commitlint
-        working-directory: go-commitlint
-        run: go run .
+        run: go run ./commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
