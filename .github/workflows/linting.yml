@@ -27,15 +27,14 @@ jobs:
         id: commitlint-version
         run: echo "hash=$(git ls-remote https://github.com/takara-ai/commit-lint HEAD | cut -f1)" >> $GITHUB_OUTPUT
 
-      - name: Cache commit-lint binary
+      - name: Restore commit-lint binary
         id: cache-commit-lint
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: .cache/commit-lint
           key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
           restore-keys: |
             commit-lint-${{ runner.os }}-
-          save-always: true
 
       - name: Install commit-lint
         if: steps.cache-commit-lint.outputs.cache-hit != 'true'
@@ -47,6 +46,13 @@ jobs:
         run: .cache/commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
+
+      - name: Save commit-lint binary to cache
+        if: always() && steps.cache-commit-lint.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/commit-lint
+          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
 
   python:
     runs-on: ubuntu-latest
