@@ -24,9 +24,7 @@ jobs:
       - name: Clone commit-lint repository
         run: git clone https://github.com/takara-ai/commit-lint.git
       - name: Run commitlint
-        run: |
-          cd commit-lint
-          go run .
+        run: go run ./commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
