@@ -11,7 +11,7 @@ permissions:
   pull-requests: read
 
 jobs:
-  commitlint:
+  commits:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
         with:
           configFile: commitlint.config.mjs
 
-  ruff:
+  python:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,3 +58,17 @@ jobs:
       - name: Run golangci-lint
         if: hashFiles('**/*.go') != ''
         uses: golangci/golangci-lint-action@v8
+
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        run: biome ci .
