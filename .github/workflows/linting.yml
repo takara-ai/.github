@@ -1,4 +1,4 @@
-name: Commit
+name: Linting
 on:
   workflow_call:
   pull_request:
@@ -17,17 +17,27 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: Clone commit-lint repository
-        run: git clone https://github.com/takara-ai/commit-lint.git
-      - name: Run commitlint
+
+      - name: Install commit-lint
         run: |
-          echo "${{ github.event.head_commit.message || github.event.pull_request.title }}" > commitmsg.txt
-          cd commit-lint
-          go run . ../commitmsg.txt
+          GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
+
+      - name: Prepare commit message
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin ${{ github.event.pull_request.base.ref }} --no-tags
+            echo "${{ github.event.pull_request.title }}" > commitmsg.txt
+          else
+            git log -1 --pretty=format:'%s%n%n%b' > commitmsg.txt
+          fi
+
+      - name: Run commit-lint
+        run: commit-lint commitmsg.txt
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
