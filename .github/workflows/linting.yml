@@ -24,7 +24,10 @@ jobs:
       - name: Clone commit-lint repository
         run: git clone https://github.com/takara-ai/commit-lint.git
       - name: Run commitlint
-        run: go run ./commit-lint
+        run: |
+          echo "${{ github.event.head_commit.message || github.event.pull_request.title }}" > commitmsg.txt
+          cd commit-lint
+          go run . ../commitmsg.txt
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
