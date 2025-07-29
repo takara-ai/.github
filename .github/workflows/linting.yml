@@ -22,8 +22,7 @@ jobs:
         with:
           go-version: stable
       - name: Run commitlint
-        working-directory: go-commitlint
-        run: go run .
+        run: go run ./go-commitlint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
