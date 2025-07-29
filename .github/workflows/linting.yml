@@ -71,4 +71,4 @@ jobs:
           version: latest
       - name: Run Biome
         if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
-        run: biome ci .
+        run: biome ci --reporter=github .
