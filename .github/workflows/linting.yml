@@ -22,7 +22,8 @@ jobs:
         with:
           go-version: stable
       - name: Run commitlint
-        run: curl -sL https://raw.githubusercontent.com/takara-ai/.github/update/ruff-lint/go-commitlint/main.go | go run -
+        working-directory: go-commitlint
+        run: go run .
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
