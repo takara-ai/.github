@@ -24,7 +24,6 @@ jobs:
       - name: Run commitlint
         run: |
           cd commit-lint
-          go mod init temp
           go run .
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
