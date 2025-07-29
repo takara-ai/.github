@@ -27,17 +27,8 @@ jobs:
         run: |
           GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
 
-      - name: Prepare commit message
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.event.pull_request.base.ref }} --no-tags
-            echo "${{ github.event.pull_request.title }}" > commitmsg.txt
-          else
-            git log -1 --pretty=format:'%s%n%n%b' > commitmsg.txt
-          fi
-
       - name: Run commit-lint
-        run: commit-lint commitmsg.txt
+        run: commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
