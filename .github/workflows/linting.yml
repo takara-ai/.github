@@ -72,3 +72,20 @@ jobs:
       - name: Run Biome
         if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
         run: biome ci --reporter=github .
+
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install dependencies
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        run: pnpm install --frozen-lockfile
+      - name: Run ESLint
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        run: pnpm exec eslint . --ext .js,.jsx,.ts,.tsx --format github
