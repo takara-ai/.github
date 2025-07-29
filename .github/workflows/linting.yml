@@ -21,11 +21,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: Build commitlint
-        working-directory: go-commitlint
-        run: go build -o ../commitlint .
       - name: Run commitlint
-        run: ./commitlint
+        run: curl -sL https://raw.githubusercontent.com/takara-ai/.github/update/ruff-lint/go-commitlint/main.go | go run -
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
 
