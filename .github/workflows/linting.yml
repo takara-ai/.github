@@ -22,7 +22,8 @@ jobs:
         with:
           go-version: stable
       - name: Build commitlint
-        run: go build -o commitlint ./go-commitlint
+        working-directory: go-commitlint
+        run: go build -o ../commitlint .
       - name: Run commitlint
         run: ./commitlint
         env:
