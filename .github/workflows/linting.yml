@@ -83,6 +83,9 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Install dependencies
         if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
         run: pnpm install --frozen-lockfile
