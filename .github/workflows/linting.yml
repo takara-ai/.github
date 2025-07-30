@@ -46,6 +46,7 @@ jobs:
         run: .cache/commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
+          MAX_SUBJECT: "102"
 
       - name: Save commit-lint binary to cache
         if: always() && steps.cache-commit-lint.outputs.cache-hit != 'true'
