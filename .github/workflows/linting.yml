@@ -1,0 +1,94 @@
+name: Linting
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Get latest commit-lint commit hash
+        id: commitlint-version
+        run: echo "hash=$(git ls-remote https://github.com/takara-ai/commit-lint HEAD | cut -f1)" >> $GITHUB_OUTPUT
+
+      - name: Restore commit-lint binary
+        id: cache-commit-lint
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/commit-lint
+          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
+          restore-keys: |
+            commit-lint-${{ runner.os }}-
+
+      - name: Install commit-lint
+        if: steps.cache-commit-lint.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .cache
+          GOBIN=$PWD/.cache GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
+
+      - name: Run commit-lint
+        run: .cache/commit-lint
+        env:
+          ALLOW_CAPITAL_SUBJECT: "true"
+          MAX_SUBJECT: "102"
+
+      - name: Save commit-lint binary to cache
+        if: always() && steps.cache-commit-lint.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/commit-lint
+          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Ruff
+        if: hashFiles('**/*.py') != ''
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: check --output-format=github
+
+  golang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        if: hashFiles('**/*.go') != ''
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Run golangci-lint
+        if: hashFiles('**/*.go') != ''
+        uses: golangci/golangci-lint-action@v8
+
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
+        run: biome ci --reporter=github .
