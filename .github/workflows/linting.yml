@@ -23,12 +23,15 @@ jobs:
         with:
           go-version: stable
 
+      # Get the latest semver tag for commit-lint using the Go module proxy.
+      # This ensures we only update the cache when a new release is published.
       - name: Get latest commit-lint semver tag
         id: commitlint-version
         run: |
           latest_tag=$(go list -m -versions github.com/takara-ai/commit-lint | awk '{print $NF}')
           echo "tag=$latest_tag" >> $GITHUB_OUTPUT
 
+      # Restore the commit-lint binary from cache if it was previously built for this semver tag.
       - name: Restore commit-lint binary
         id: cache-commit-lint
         uses: actions/cache/restore@v4
@@ -38,18 +41,21 @@ jobs:
           restore-keys: |
             commit-lint-${{ runner.os }}-
 
+      # Install commit-lint at the specific semver tag if not found in cache.
       - name: Install commit-lint
         if: steps.cache-commit-lint.outputs.cache-hit != 'true'
         run: |
           mkdir -p .cache
           GOBIN=$PWD/.cache GO111MODULE=on go install github.com/takara-ai/commit-lint@${{ steps.commitlint-version.outputs.tag }}
 
+      # Run the commit-lint binary to check commit messages.
       - name: Run commit-lint
         run: .cache/commit-lint
         env:
           ALLOW_CAPITAL_SUBJECT: "true"
           MAX_SUBJECT: "102"
 
+      # Save the built commit-lint binary to cache for future runs.
       - name: Save commit-lint binary to cache
         if: always() && steps.cache-commit-lint.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
