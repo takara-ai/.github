@@ -23,16 +23,18 @@ jobs:
         with:
           go-version: stable
 
-      - name: Get latest commit-lint commit hash
+      - name: Get latest commit-lint semver tag
         id: commitlint-version
-        run: echo "hash=$(git ls-remote https://github.com/takara-ai/commit-lint HEAD | cut -f1)" >> $GITHUB_OUTPUT
+        run: |
+          latest_tag=$(go list -m -versions github.com/takara-ai/commit-lint | awk '{print $NF}')
+          echo "tag=$latest_tag" >> $GITHUB_OUTPUT
 
       - name: Restore commit-lint binary
         id: cache-commit-lint
         uses: actions/cache/restore@v4
         with:
           path: .cache/commit-lint
-          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
+          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.tag }}
           restore-keys: |
             commit-lint-${{ runner.os }}-
 
@@ -40,7 +42,7 @@ jobs:
         if: steps.cache-commit-lint.outputs.cache-hit != 'true'
         run: |
           mkdir -p .cache
-          GOBIN=$PWD/.cache GO111MODULE=on go install github.com/takara-ai/commit-lint@latest
+          GOBIN=$PWD/.cache GO111MODULE=on go install github.com/takara-ai/commit-lint@${{ steps.commitlint-version.outputs.tag }}
 
       - name: Run commit-lint
         run: .cache/commit-lint
@@ -53,7 +55,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: .cache/commit-lint
-          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.hash }}
+          key: commit-lint-${{ runner.os }}-go-${{ steps.commitlint-version.outputs.tag }}
 
   python:
     runs-on: ubuntu-latest
