@@ -1,5 +1,5 @@
-# .github/workflows/commitlint.yml
-name: Commitlint (central template)
+# .github/workflows/linting.yml
+name: Linting (central template)
 
 # doesn't need workflow call, only use : for nested data
 on:
@@ -11,7 +11,8 @@ on:
 jobs:
   lint:
     # calls your central workflow
-    uses: takara-ai/.github/.github/workflows/commit.yml@main
+    # this includes all linters
+    uses: takara-ai/.github/.github/workflows/linting.yml@main
     # inherit the caller’s GITHUB_TOKEN so Commitlint can read PRs/commits
     secrets: inherit
     # this is neccessary to pass to central workflow

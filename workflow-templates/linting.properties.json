@@ -1,5 +1,5 @@
 {
-  "name": "Lint Commit Messages",
+  "name": "Linters",
   "description": "Check commit messages follow conventional commit format",
   "iconName": "git-commit",
   "categories": [
