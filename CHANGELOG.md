@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.0](https://github.com/takara-ai/.github/compare/v1.0.0...v1.1.0) (2025-07-30)
+
+
+### Features
+
+* add initial Go commit linter implementation with tests ([b7931b6](https://github.com/takara-ai/.github/commit/b7931b6a542a28e8e26a3b2996d1b6d71cbdd158))
+* add minimal commitlint script ([474b885](https://github.com/takara-ai/.github/commit/474b885db45d2e348c73ea05ba665a4079efded3))
+* multi linter one workflow support ([1d045f7](https://github.com/takara-ai/.github/commit/1d045f7bf0b4fc60f8e12f4bf141357fa29f050d))
+
+
+### Bug Fixes
+
+* **ci:** fix syntax error ([d77fb86](https://github.com/takara-ai/.github/commit/d77fb866c4db8348ef86e3b3a7478c473d48209c))
+* syntax error ([6f7a9e4](https://github.com/takara-ai/.github/commit/6f7a9e4796a0c799be8f27c9b2552f4339e2f55f))
+
 ## 1.0.0 (2025-07-28)
 
 
