@@ -1,10 +1,14 @@
-# .github/workflows/release-please.yml
-
 name: release-please
-
 
 on:
   workflow_call:
+    inputs:
+      release-type:
+        description: "Release Please release-type"
+        required: false
+        type: string
+        default: simple
+  # Optional: keep this only if you also want the template repo itself to run on pushes
   push:
     branches:
       - main
@@ -20,5 +24,4 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         with:
-          release-type: simple
-          # token input is omitted, so it defaults to GITHUB_TOKEN
+          release-type: ${{ inputs.release-type }}
