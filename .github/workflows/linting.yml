@@ -89,14 +89,17 @@ jobs:
 
   js:
     runs-on: ubuntu-latest
+    if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
       - name: Setup Biome
-        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
         uses: biomejs/setup-biome@v2
         with:
           version: latest
       - name: Run Biome
-        if: hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') != ''
         run: biome ci --reporter=github .
