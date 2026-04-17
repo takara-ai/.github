@@ -6,7 +6,7 @@ on:
   push:
     branches:
     # could be exapnded for coverage of other branches
-      - main 
+      - main
 
 jobs:
   release:

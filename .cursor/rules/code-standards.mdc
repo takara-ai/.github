@@ -7,9 +7,9 @@ alwaysApply: true
 
 ## 1. Package Management
 
-- **Always** use `pnpm` for Node.js.  
+- **Always** use `pnpm` for Node.js.
   - **Never** use `npm` or `yarn`.
-- **Always** use `uv` for Python.  
+- **Always** use `uv` for Python.
   - **Never** use `pip`, `pipenv`, or `poetry`.
 - **Never** include version numbers for any dependencies in install commands, manifests, code, or documentation.
   - **Do not** specify or pin versions.
@@ -48,7 +48,7 @@ alwaysApply: true
 - ✅ No lockfiles or version numbers in code or documentation
 - ✅ No emojis anywhere
 - ✅ No scripts or commands for starting dev servers
-- ✅ Commits: `feat: add login page`  
+- ✅ Commits: `feat: add login page`
   ❌ `add login page 🚀`
 
 ---

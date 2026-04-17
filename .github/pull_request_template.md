@@ -1,7 +1,7 @@
 ## Describe your changes
 What was changed and why this change was needed
 
-- **What**: 
+- **What**:
 - **Why**:
 
 ## Issue ticket number and link
@@ -10,4 +10,4 @@ What was changed and why this change was needed
 - [ ] PR title follows conventional commit format (e.g., `feat: add user authentication`, `fix: resolve API timeout`)
 - [ ] I have performed a self-review of my code
 - [ ] Tests pass
-- [ ] Documentation updated if needed 
+- [ ] Documentation updated if needed
