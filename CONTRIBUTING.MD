@@ -1,5 +1,11 @@
 # Contributing to TAKARA.AI Projects
 
+## Pre-commit
+
+- Install [pre-commit](https://pre-commit.com/)
+- Run `pre-commit install` to set up the pre-commit hooks.
+- These hooks ensure your code adheres to our standards and is ready for merging.
+
 ## Commit Message Standards
 
 - **Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):**
