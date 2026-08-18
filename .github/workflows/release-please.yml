@@ -18,6 +18,16 @@ on:
         required: false
         type: string
         default: ".release-please-manifest.json"
+    outputs:
+      release_created:
+        description: "Whether Release Please created a release"
+        value: ${{ jobs.release-please.outputs.release_created }}
+      tag_name:
+        description: "Tag created by Release Please"
+        value: ${{ jobs.release-please.outputs.tag_name }}
+      version:
+        description: "Version created by Release Please"
+        value: ${{ jobs.release-please.outputs.version }}
 
 permissions:
   contents: write
