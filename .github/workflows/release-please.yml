@@ -8,10 +8,16 @@ on:
         required: false
         type: string
         default: simple
-  # Optional: keep this only if you also want the template repo itself to run on pushes
-  push:
-    branches:
-      - main
+      config-file:
+        description: "Repository Release Please manifest configuration path"
+        required: false
+        type: string
+        default: ""
+      manifest-file:
+        description: "Repository Release Please version manifest path"
+        required: false
+        type: string
+        default: ".release-please-manifest.json"
 
 permissions:
   contents: write
@@ -21,7 +27,19 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created || steps.manifest.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name || steps.manifest.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version || steps.manifest.outputs.version }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - id: release
+        if: ${{ inputs.config-file == '' }}
+        uses: googleapis/release-please-action@v4
         with:
           release-type: ${{ inputs.release-type }}
+      - id: manifest
+        if: ${{ inputs.config-file != '' }}
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: ${{ inputs.config-file }}
+          manifest-file: ${{ inputs.manifest-file }}
