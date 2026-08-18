@@ -28,9 +28,9 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     outputs:
-      release_created: ${{ steps.release.outputs.release_created || steps.manifest.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name || steps.manifest.outputs.tag_name }}
-      version: ${{ steps.release.outputs.version || steps.manifest.outputs.version }}
+      release_created: ${{ inputs.config-file != '' && steps.manifest.outputs.release_created || steps.release.outputs.release_created }}
+      tag_name: ${{ inputs.config-file != '' && steps.manifest.outputs.tag_name || steps.release.outputs.tag_name }}
+      version: ${{ inputs.config-file != '' && steps.manifest.outputs.version || steps.release.outputs.version }}
     steps:
       - id: release
         if: ${{ inputs.config-file == '' }}
