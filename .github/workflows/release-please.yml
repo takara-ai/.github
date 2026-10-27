@@ -44,12 +44,12 @@ jobs:
     steps:
       - id: release
         if: ${{ inputs.config-file == '' }}
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           release-type: ${{ inputs.release-type }}
       - id: manifest
         if: ${{ inputs.config-file != '' }}
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         with:
           config-file: ${{ inputs.config-file }}
           manifest-file: ${{ inputs.manifest-file }}
